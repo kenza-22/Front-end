@@ -59,7 +59,7 @@ export default function Landing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
                 <h1 className="text font-bold tracking-tight sm:text-5xl">
-                  A better way to manage your project
+                  A Better Way To Manage Your Project
                 </h1>
                 <p className="sous-titre animated-text mt-6 text-lg leading-8 text-gray-600">
                   A more effective approach to project management, optimizing
@@ -90,7 +90,7 @@ export default function Landing() {
                   Visualize Faster
                 </h2>
                 <p className="text1 mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Unlock the Potential of Jira Data Visualization
+                  Unlock The Potential Of Jira Data Visualization
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
                   Effortlessly explore and understand your project dynamics with
