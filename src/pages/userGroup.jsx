@@ -29,7 +29,7 @@ const UserInfo = () => {
           .then(data => {
             if (data.value ) {
               const displayNames = data.value.map(group => group.displayName);
-              console.log("roleeeeeee:",displayNames)
+              console.log("role:",displayNames)
               setRoles(displayNames);
               localStorage.setItem("roles", JSON.stringify(displayNames));
             }
@@ -46,13 +46,14 @@ const UserInfo = () => {
     if (accounts.length > 0) {
       getUserInfo();
     }
-    console.log("tttttttttttttttttttttttttt",roles)
+    console.log("Roles",roles)
    // return roles
   }, [instance, accounts]);
  /*if(roles=="Manager"){
-    return <Navigate to="/Dashboard2"/>
-  }else if (roles=="Administrateur"){
-    return <Navigate to="/Dashboard"/>
+    return <Navigate to="/DashboardsProject"/>
+  }else if (roles=="Scrum master" || roles="Product Owner"){
+    return 
+    <Navigate to="/DashboardsIssues"/>
   }*/
 
   return (
