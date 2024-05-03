@@ -1,15 +1,28 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-function RatioBugs(){
+function RatioBugs({selected}){
+  const [Ratio, setRatio] = useState(0);
+
+  useEffect(() => {
+    if (selected) {
+      axios
+        .get(`http://localhost:5000/project/${selected}/timeRatio`)
+        .then((res) => {
+          setRatio(res.data.percentage);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selected]);
   const data = {
-    labels: ["Data 1", "Data 2"],
+    labels: ["Ratio"],
     datasets: [
       {
         label: "Count",
-        data: [20, 30],
+        data: [Ratio],
         backgroundColor: [
           "rgba(43, 63, 229, 0.8)",
           "rgba(250, 192, 19, 0.8)",

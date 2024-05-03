@@ -1,15 +1,30 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-function PourcChargeConsom(){
+function PourcChargeConsom({selected}){
+  const [PourcCharge, setPourcCharge] = useState(0);
+
+  useEffect(() => {
+    if (selected) {
+      axios
+        .get(`http://localhost:5000/project/${selected}/timeRatio`)
+        .then((res) => {
+          console.log("Poucentage charge:", res.data);
+          setPourcCharge(res.data.percentage);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selected]);
+ 
     const dataPie = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      labels: ["Charge consommé % Charge estimé"],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            label: "Count",
+            data: [PourcCharge],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",

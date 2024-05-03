@@ -2,14 +2,33 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 import { Chart, registerables, scales } from 'chart.js';
+import axios from "axios";
+import { useState, useEffect } from "react";
 Chart.register(...registerables);
-function BarChartParStatut() {
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+function BarChartParStatut({ selected }) {
+  const [ticketData, setTicketData] = useState([]);
+  const [ticketStatut, setTicketStatut] = useState([]);
+  const [ticketCounts, setTicketCounts] = useState([]);
+
+  useEffect(() => {
+    if (selected) {
+      axios
+        .get(`http://localhost:5000/tickets/${selected}/kpi/by-statut`)
+        .then((res) => {
+          console.log("Tickets par type:", res.data);
+          const statut = res.data.map((item) => item._id);
+          const counts = res.data.map((item) => item.count);
+          setTicketStatut(statut);
+          setTicketCounts(counts);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selected]);
     const dataBar = {
-      labels: labels,
+      labels: ticketStatut,
       datasets: [{
         label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        data: ticketCounts,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(255, 159, 64, 0.2)',

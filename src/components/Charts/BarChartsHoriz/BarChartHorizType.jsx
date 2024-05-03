@@ -5,19 +5,19 @@ import { Chart, registerables } from 'chart.js';
 import axios from "axios";
 import { useState, useEffect } from "react";
 Chart.register(...registerables);
-function BarChartHoriz({selected}){
-  const [ticketTypes, setTicketTypes] = useState([]);
+function BarChartHorizType({selected}){
+    const [ticketTypes, setTicketTypes] = useState([]);
     const [timeCount, setTimeCount] = useState([]);
   
     useEffect(() => {
       if (selected) {
         axios
-          .get(`http://localhost:5000/tickets/${selected}/kpi/estimated-time-by-statut`)
+          .get(`http://localhost:5000/tickets/${selected}/kpi/estimated-time-by-type`)
           .then((res) => {
             console.log("Tickets par type:", res.data);
-            const statut = res.data.map((item) => item._id);
+            const types = res.data.map((item) => item._id);
             const Estimated = res.data.map((item) => item.totalEstimatedTime);
-            setTicketTypes(statut);
+            setTicketTypes(types);
             setTimeCount(Estimated);
           })
           .catch((err) => console.log(err));
@@ -63,4 +63,4 @@ function BarChartHoriz({selected}){
          </> 
     )
 }
-export default BarChartHoriz;
+export default BarChartHorizType;

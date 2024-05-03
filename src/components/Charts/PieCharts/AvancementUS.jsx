@@ -1,15 +1,28 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-function AvancementUS(){
+function AvancementUS({selected}){
+const [AvancementUS, setAvancementUS] = useState(0);
+useEffect(()=>{
+  if(selected){
+    axios
+        .get(`http://localhost:5000/project/${selected}/storyCompletionRatio`)
+        .then((res) => {
+          console.log("Avancement US :", res.data);
+          setAvancementUS(res.data.ratio);
+        })
+        .catch((err) => console.log(err));
+  }
+},[selected])
     const dataPie = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Avancement des Travaux: Nombre US clôturés / nbr US total"],
         datasets: [
           {
             label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            data: [AvancementUS],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",

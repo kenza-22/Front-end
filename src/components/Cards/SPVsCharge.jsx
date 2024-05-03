@@ -1,6 +1,20 @@
 import React from "react";
 import Effort from "../../pages/Images/effort.png"
-function SPVsCharge() {
+import axios from "axios";
+import { useState, useEffect } from "react";
+function SPVsCharge({selected}) {
+  const [Charge, setCharge]= useState(null);
+  useEffect(() => {
+    if(selected !== "Select a project"){
+    axios
+      .get(`http://localhost:5000/project/${selected}/effortRatio`)
+      .then((res) => {
+        console.log("Points d'effort traité from API:", res.data);
+        setCharge(res.data.percentage);
+      })
+      .catch((err) => console.log(err));
+    }
+  }, [selected]);
   return (
     <div>
       <dl className="mt-0 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -15,7 +29,7 @@ function SPVsCharge() {
               <p className="mt-5 ml-20 truncate text-sm font-medium text-gray-500">Points Effort VS Charge</p>
             </dt>
             <dd className="ml-20 flex items-baseline pb-6 sm:pb-7">
-              <p className="text-2xl font-semibold text-gray-900">71,897</p>
+              <p className="text-2xl font-semibold text-gray-900">{Charge !== null ? Charge : "Chargement..."}</p>
             </dd>
           </div>
       </dl>

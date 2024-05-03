@@ -1,15 +1,28 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { useState, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
+import axios from "axios";
 Chart.register(...registerables);
-function PieChart(){
+function PieChart({ selected }){
+  const [storyPointData, setStoryPointData] = useState([]);
+
+  useEffect(() => {
+    if (selected) {
+      axios
+        .get(`http://localhost:5000/tickets/${selected}/kpi/complexity-by-statut`)
+        .then((res) => {
+          setStoryPointData(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selected]);
     const dataPie = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: storyPointData.map((item) => item._id),
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            label: "Nombre de Story Points",
+            data: storyPointData.map((item) => item.totalStoryPoints),
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",

@@ -1,6 +1,22 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
+function NombreBugs({selected}) {
+  const [Bugs, SetBugs] = useState(null);
+  
 
-function NombreBugs() {
+  useEffect(() => {
+    if (selected !== "Select a project") {
+      axios
+        .get(`http://localhost:5000/project/${selected}/bugsCount`)
+        .then((res) => {
+          console.log("Nombre des bugs:", res.data);
+          SetBugs(res.data.count);
+        })
+        .catch((err) => console.log(err));
+      
+    }
+  }, [selected]);
   return (
     <div>
       <dl className="mt-0 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -17,7 +33,7 @@ function NombreBugs() {
               <p className="mt-5 ml-20 truncate text-sm font-medium text-gray-500">Nombre de Bugs</p>
             </dt>
             <dd className="ml-20 flex items-baseline pb-6 sm:pb-7">
-              <p className="text-2xl font-semibold text-gray-900">71,897</p>
+              <p className="text-2xl font-semibold text-gray-900"> {Bugs !== null ? Bugs : "Chargement..."}</p>
             </dd>
           </div>
       </dl>
