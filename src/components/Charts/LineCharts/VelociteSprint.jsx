@@ -14,7 +14,17 @@ const data = {
 };
     return(
         <div style={{ width: "500px" }}>
-<Line data={data}/>
+<Line 
+data={data}
+options={{
+  plugins: {
+    title: {
+      display: true,
+      text: "Vélocité agile",
+    },
+  },
+}}
+/>
         </div>
     );
 }

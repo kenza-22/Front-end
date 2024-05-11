@@ -12,10 +12,29 @@ const data = {
     tension: 0.1
   }]
 };
+const options = {
+  scales:{
+    y:{
+      beginAtZero: true
+    }
+  }
+  }
     return(
         <div style={{ width: "500px" }}>
-<Line data={data}/>
+<Line 
+data={data}
+options={{
+  plugins: {
+    ...options,
+    title: {
+      display: true,
+      text: "Burndown chart",
+    },
+  },
+}}
+/>
         </div>
+     
     );
 }
 export default Burndown;
