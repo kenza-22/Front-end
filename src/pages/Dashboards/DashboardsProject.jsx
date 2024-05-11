@@ -3,10 +3,12 @@ import { Home } from "../Home";
 import SuivieProj from "../../components/Cards/SuivieProj";
 import VelociteProj from "../../components/Charts/BarCharts/VelociteProj";
 import AvancementTemps from "../../components/Charts/PieCharts/AvancementTemps";
-import SPVsCharge from "../../components/Cards/SPVsCharge";
 import { Card } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Cards from "../../components/Cards/cards";
+import PourcEffortTrait from "../../components/Charts/PieCharts/PourcEfforTrait";
+import PourcTraitBugs from "../../components/Charts/PieCharts/PourcTraitBugs";
 function DashboardsProject(){
     const [selected, setSelected] = useState(null);
     const [Project, setProject] = useState([]);
@@ -35,20 +37,27 @@ function DashboardsProject(){
           ))}
         </select>
       </div>
-            
-             <SuivieProj/>
-  
+            <br/>
+            <Cards selected={selected}/>
+             {/* <SuivieProj/> */}
+      
+   <br/>
    <div className="flex">
-    <Card  className="mt-6 w-3/4 mr-8">
+   
     <VelociteProj selected={selected}/>
-    </Card>
-
-    <Card  className="mt-6 w-3/4">
-    <AvancementTemps selected={selected}/>
-    </Card>
-    </div>
-    <SPVsCharge selected={selected}/>
     
+
+    <div className="ml-auto">
+    <AvancementTemps selected={selected}/>
+    </div>
+    </div>
+    <br/><br/>
+    <div className="flex">
+    <PourcEffortTrait selected={selected}/>
+    <div className="ml-auto">
+    <PourcTraitBugs selected={selected}/>
+    </div>
+    </div>
         </div>
     );
 }

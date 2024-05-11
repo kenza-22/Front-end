@@ -5,7 +5,6 @@ import PourcChargeConsom from'../../components/Charts/PieCharts/PourcChargeConso
 import RatioBugs from "../../components/Charts/Jauge/RatioBugs";
 import QualiteFonctionnelle from "../../components/Charts/Jauge/QualiteFonctionnelle";
 import BugGenerDev from "../../components/Cards/BugGenerDev";
-import { Home } from "../Home";
 import { Card } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -21,7 +20,7 @@ function DashboardsSprintFinish(){
           .catch((err) => console.log(err));
       }, []);
     return(
-        <div className="bg-gray-50">
+        <div className="bg-gray-100">
                  <div className="mt-1 relative">
         <select
           className="block appearance-none w-full cursor-default bg-white py-1.5 pl-3 pr-10 text-gray-900 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -36,27 +35,26 @@ function DashboardsSprintFinish(){
           ))}
         </select>
       </div>
-             {/* <Home/>  */}
-            <div className="flex">
+            <br/>
+          
             <ChargeTraitBugs selected={selected}/>
-            <BugGenerDev selected={selected}/>
-            </div>
+          
             <div className="flex">
-            <Card className="mt-6 w-3/4">
+            
             <Burndown selected={selected}/>
-            </Card>
-            <Card className="mt-6 w-3/4">
+          
+            <div className="ml-auto">
             <PourcChargeConsom selected={selected}/>
-            </Card>
+            </div>
             </div>
              <div className="flex">
-            <Card className="mt-6 w-3/4">
+       
             <QualiteFonctionnelle selected={selected}/>
-            </Card>
+      
 
-            <Card className="mt-6 w-3/4">
+            <div className="ml-auto">
             <RatioBugs selected={selected}/>
-            </Card>
+            </div>
             </div>
            
             
