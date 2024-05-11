@@ -17,12 +17,13 @@ useEffect(()=>{
         .catch((err) => console.log(err));
   }
 },[selected])
+const remainingPercentage = 100 - AvancementUS;
     const dataPie = {
-        labels: ["Avancement des Travaux: Nombre US clôturés / nbr US total"],
+        labels: ["Avancement des Travaux: User Story"],
         datasets: [
           {
             label: "# of Votes",
-            data: [AvancementUS],
+            data: [AvancementUS, remainingPercentage],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -45,7 +46,17 @@ useEffect(()=>{
       };
 return(
     <div style={{ width: "300px" }}>
-        <Pie data={dataPie} />
+        <Pie 
+        data={dataPie} 
+        options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "Avancement des Travaux: User Story",
+            },
+          },
+        }}
+        />
         </div> 
 )
 }

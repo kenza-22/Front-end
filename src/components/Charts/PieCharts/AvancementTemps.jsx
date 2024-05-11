@@ -17,12 +17,13 @@ function AvancementTemps({selected}){
           .catch((err) => console.log(err));
     }
   },[selected])
+  const remainingPercentage = 100 - AvancementTemps;
     const dataPie = {
-        labels: ["Avancement des Travaux: Temps consommé / Temps estimé"],
+        labels: ["Avancement des Travaux: Temps"],
         datasets: [
           {
             label: "# of Votes",
-            data: [AvancementTemps],
+            data: [AvancementTemps, remainingPercentage],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -45,7 +46,17 @@ function AvancementTemps({selected}){
       };
 return(
     <div style={{ width: "300px" }}>
-        <Pie data={dataPie} />
+        <Pie 
+        data={dataPie}
+        options={{
+          plugins:{
+            title: {
+              display: true,
+              text: "Avancement des Travaux: Temps"
+            }
+          }
+        }}
+        />
         </div> 
 )
 }

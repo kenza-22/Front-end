@@ -18,13 +18,13 @@ function PourcChargeConsom({selected}){
         .catch((err) => console.log(err));
     }
   }, [selected]);
- 
+  const remainingPercentage = 100 - PourcCharge;
     const dataPie = {
       labels: ["Charge consommé % Charge estimé"],
         datasets: [
           {
             label: "Count",
-            data: [PourcCharge],
+            data: [PourcCharge, remainingPercentage],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -47,7 +47,17 @@ function PourcChargeConsom({selected}){
       };
 return(
     <div style={{ width: "300px" }}>
-        <Pie data={dataPie} />
+        <Pie 
+        data={dataPie} 
+        options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "Charge consommée % charge estimé",
+            },
+          },
+        }}
+        />
         </div> 
 )
 }
