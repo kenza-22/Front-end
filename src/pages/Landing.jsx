@@ -3,6 +3,7 @@ import test from "./Images/Capture d'écran 2024-03-21 144508.png";
 import projectOverview from "./Images/project overview.png";
 import sprintAnalytics from "./Images/sprint-analytics.png";
 import projectTracking from "./Images/project-tracking.png";
+import Visualisation from "./Images/Visualisation.png";
 import CustomReport from "./Images/custom-reports.png";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { SignInButton } from "../components/SignInButton";
@@ -59,11 +60,10 @@ export default function Landing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
                 <h1 className="text font-bold tracking-tight sm:text-5xl">
-                  A Better Way To Manage Your Project
+                La Meilleure Façon Pour Gérer Votre Projet
                 </h1>
                 <p className="sous-titre animated-text mt-6 text-lg leading-8 text-gray-600">
-                  A more effective approach to project management, optimizing
-                  productivity and fostering sound decision-making.
+                Une approche plus efficace de la gestion de projet, optimisant la productivité et favorisant la prise de décision 
                 </p>
               </div>
 
@@ -87,17 +87,17 @@ export default function Landing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl lg:text-center">
                 <h2 className="text-base font-semibold leading-7 text-blue-500">
-                  Visualize Faster
+                Visualiser Rapidement
                 </h2>
                 <p className="text1 mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Unlock The Potential Of Jira Data Visualization
+                Libérez le potentiel de la visualisation des données Jira
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Effortlessly explore and understand your project dynamics with
-                  our intuitive dashboard solutions. From project progress to
-                  sprint analytics, we've got you covered. Empower your team
-                  with actionable insights and elevate your project management
-                  experience with our Jira data visualization dashboards.
+                Explorez et comprener facilement la dynamique de votre projet grâce à 
+                nos solutions de tableau de bord intuitives. De la progression du projet à l'analyse 
+                des sprints. Donnez à votre équipe les clés pour des perspectives 
+                exploitables et améliorer votre expérience de gestion de projet 
+                avec nos tableaux de bord de visualisation des données Jira
                 </p>
               </div>
               <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -107,12 +107,11 @@ export default function Landing() {
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
                         <img src={projectOverview} alt="Project overview" />
                       </div>
-                      Project Overview
+                      Vue d'ensemble du projet
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                      Gain clarity into your projects with insightful
-                      visualizations. Track tickets, monitor progress, and
-                      identify bottlenecks effortlessly.
+                    Gagnez en clarté dans vos projets avec des visualisations perspicaces. Suivez les tickets, 
+                    surveillez les progrès et identifiez points à améliorer.
                     </dd>
                   </div>
                   <div className="relative pl-16">
@@ -120,12 +119,12 @@ export default function Landing() {
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
                         <img src={sprintAnalytics} alt="Sprint analytics" />
                       </div>
-                      Sprint Analytics
+                      Analyse Sprint
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                      Stay on top of your sprint performance. Visualize sprint
-                      progress, velocity, and team capacity to optimize
-                      productivity.
+                    Surveillez de près la performance de votre sprint. 
+                    Visualisez la progression du sprint, 
+                    la vélocité et la capacité de l'équipe pour optimiser la productivité.
                     </dd>
                   </div>
                   <div className="relative pl-16">
@@ -133,25 +132,24 @@ export default function Landing() {
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
                         <img src={projectTracking} alt="Project tracking" />
                       </div>
-                      Project Tracking
+                      Suivi De Projet
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                      Effortlessly track project milestones and progress. Keep
-                      stakeholders informed and projects on track with
-                      comprehensive project tracking dashboards.
+                    Suivez sans effort les jalons et les progrès du projet. 
+                    Tenez les parties prenantes informées et gardez les projets
+                     sur la bonne voie avec des tableaux de bord complets de suivi de projet
                     </dd>
                   </div>
                   <div className="relative pl-16">
                     <dt className="text-base font-semibold leading-7 text-gray-900">
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
-                        <img src={CustomReport} alt="Custom report" />
+                        <img src={Visualisation} alt="Custom report" className="w-6"/>
                       </div>
-                      Custom Reports
+                      Variété De Graphiques
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                      Tailor reports to your specific needs. From burn-down
-                      charts to issue trends, visualize Jira data exactly how
-                      you want it.
+                    Découvrez une multitude de visualisation graphique pour analyser les données de Jira de manière approfondie et adaptée à vos besoins spécifiques. 
+                    
                     </dd>
                   </div>
                 </dl>
