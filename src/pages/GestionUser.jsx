@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 function GestionUser() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ value: [] });
   useEffect(() => {
     axios
       .get("http://localhost:5000/user")
@@ -12,15 +12,19 @@ function GestionUser() {
         console.log("Data from API:", res.data);
         setData(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log("Error fetching data:", err);
+      });
   }, []);
   const navigate = useNavigate();
-  const handleDelete = (_id) => {
+  const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/user/${_id}`)
+      .delete(`http://localhost:5000/user/${id}`)
       .then((response) => {
         console.log("Item deleted successfully:", response);
-        setData(data.filter((item) => item._id !== _id));
+        setData((prevData) => ({
+          value: prevData.value.filter((user) => user.id !== id),
+        }));
       })
       .catch((error) => {
         console.error("Error deleting item:", error);
@@ -31,10 +35,17 @@ function GestionUser() {
     navigate("/AddUser");
   };
 
+  const handleClickM = () => {
+    navigate("/UpdateUser");
+  };
+
+  const handleClickG = (id) => {
+    navigate(`/AssignUser/${id}`);
+  };
   return (
     <>
       <div>
-        <div className="mt-10 w-1/2 sm:ml-auto px-4 sm:px-6 lg:px-8 max-w-screen-lg mx-auto">
+        <div className="px-4 sm:px-6 lg:px-8 max-w-screen-lg mx-auto">
           <div className="sm:flex sm:items-center">
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="sm:flex sm:items-center">
@@ -43,7 +54,7 @@ function GestionUser() {
                     Users
                   </h1>
                 </div>
-                <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <div className="mt-4 mr-10 sm:mt-0 sm:flex-none">
                   <button
                     type="button"
                     className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -70,26 +81,15 @@ function GestionUser() {
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                             >
-                              FirstName
+                              Display name
                             </th>
                             <th
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                             >
-                              LastName
+                              Principal name
                             </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                            >
-                              Email
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                            >
-                              Title
-                            </th>
+
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -99,25 +99,19 @@ function GestionUser() {
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          {data.map((d, i) => (
+                          {data.value.map((user, i) => (
                             <tr key={i}>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {d._id}
+                                {i+1}
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {d.Firstname}
+                                {user.displayName}
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {d.Lastname}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {d.Email}
-                              </td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {d.Title}
+                                {user.userPrincipalName}
                               </td>
                               <td className="flex relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                <button>
+                              <button onClick={handleClickM}>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -133,7 +127,18 @@ function GestionUser() {
                                     />
                                   </svg>
                                 </button>
-                                <button onClick={() => handleDelete(d._id)}>
+                               
+                                <button onClick={() => handleClickG(user.id)}>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6 text-indigo-600 hover:text-indigo-900"
+                                  >
+                                    <path d="M5.25 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM2.25 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM18.75 7.5a.75.75 0 0 0-1.5 0v2.25H15a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H21a.75.75 0 0 0 0-1.5h-2.25V7.5Z" />
+                                  </svg>
+                                </button>
+                                <button onClick={() => handleDelete(user.id)}>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
