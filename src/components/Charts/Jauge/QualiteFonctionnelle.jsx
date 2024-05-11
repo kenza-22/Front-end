@@ -18,15 +18,16 @@ function QualiteFonctionnelle({selected}){
         .catch((err) => console.log(err));
     }
   }, [selected]);
+  const remainingPercentage = 100 - Qualite;
   const data = {
     labels: ["Qualité Fonctionnelle"],
     datasets: [
       {
         label: "Count",
-        data: [Qualite],
+        data: [Qualite, remainingPercentage],
         backgroundColor: [
-          "rgba(43, 63, 229, 0.8)",
-          "rgba(250, 192, 19, 0.8)",
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)'
         ],
         circumference: 180,
         rotation: 270
@@ -34,8 +35,19 @@ function QualiteFonctionnelle({selected}){
     ],
   };
 return(
+
     <div style={{ width: "300px" }}>
-        <Doughnut data={data}/>
+        <Doughnut 
+        data={data}
+        options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "Temps passé sur bugs % Temps passé sur dév de nv fonctionnalités",
+            },
+          },
+        }}
+        />
         </div> 
 )
 }

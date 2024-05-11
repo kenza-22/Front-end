@@ -10,22 +10,23 @@ function RatioBugs({selected}){
   useEffect(() => {
     if (selected) {
       axios
-        .get(`http://localhost:5000/project/${selected}/timeRatio`)
+        .get(`http://localhost:5000/project/${selected}/bugToStoryRatio`)
         .then((res) => {
-          setRatio(res.data.percentage);
+          setRatio(res.data.bugToStoryRatio);
         })
         .catch((err) => console.log(err));
     }
   }, [selected]);
+  const remainingPercentage = 100 - Ratio;
   const data = {
     labels: ["Ratio"],
     datasets: [
       {
         label: "Count",
-        data: [Ratio],
+        data: [Ratio, remainingPercentage],
         backgroundColor: [
-          "rgba(43, 63, 229, 0.8)",
-          "rgba(250, 192, 19, 0.8)",
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)'
         ],
         circumference: 180,
         rotation: 270
@@ -34,8 +35,19 @@ function RatioBugs({selected}){
   };
 return(
     <div style={{ width: "300px" }}>
-        <Doughnut data={data}/>
+        <Doughnut 
+        data={data}
+        options={{
+          plugins: {
+            title: {
+              display: true,
+              text: "Ratio des bugs % Nbr US",
+            },
+          },
+        }}
+        />
         </div> 
+ 
 )
 }
 
