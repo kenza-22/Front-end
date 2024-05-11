@@ -2,7 +2,7 @@ import { useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 //import { Route, Navigate  } from "react-router-dom";
 
-const UserInfo = () => {
+const UserInfo = ({Group, setGroup}) => {
   const { instance, accounts } = useMsal();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
@@ -32,6 +32,7 @@ const UserInfo = () => {
               console.log("role:",displayNames)
               setRoles(displayNames);
               localStorage.setItem("roles", JSON.stringify(displayNames));
+              setGroup(displayNames);
             }
           })
           .catch(error => {
@@ -40,22 +41,18 @@ const UserInfo = () => {
       } catch (error) {
         console.error("Error retrieving user info:", error);
       }
+     
       return roles
     };
 
     if (accounts.length > 0) {
       getUserInfo();
     }
+   
     console.log("Roles",roles)
    // return roles
   }, [instance, accounts]);
- /*if(roles=="Manager"){
-    return <Navigate to="/DashboardsProject"/>
-  }else if (roles=="Scrum master" || roles="Product Owner"){
-    return 
-    <Navigate to="/DashboardsIssues"/>
-  }*/
-
+ 
   return (
     <div>
       {user && (
