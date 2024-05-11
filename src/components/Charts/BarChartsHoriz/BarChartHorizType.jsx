@@ -23,6 +23,52 @@ function BarChartHorizType({selected}){
           .catch((err) => console.log(err));
       }
     }, [selected]);
+    const customColors = ticketTypes.map((type) => {
+      if (type === "Bug") {
+        return 'rgba(255, 0, 0, 0.5)'; 
+        
+      } else {
+        if(type === "Sous-tâche")
+        return 'rgba(176, 224, 230, 1)'; 
+        else{
+          if (type === "Story")
+          return 'rgba(216, 191, 216, 1)'
+          else{
+            if (type === "Tâche")
+            return 'rgba(176, 196, 222, 1)'
+            else{
+              if (type === "Epic")
+              return 'rgba(138, 43, 226, 1)'
+              else{
+                if (type === "Support")
+                return 'rgba(255, 140, 0, 1)'
+                else{
+                  if (type === "Tâche technique")
+                  return 'rgba(100, 149, 237, 1)'
+                  else{
+                    if (type === "Test task")
+                    return 'rgba(255, 255, 0, 1)'
+                    else{
+                      if (type === "Testing task")
+                      return 'rgba(255, 215, 0, 1)'
+                      else{
+                        if (type === "Bogue")
+                        return 'rgba(205, 92, 92, 1)'
+                        else{
+                          if (type === "Bug Sub Task")
+                          return 'rgba(255, 67, 67, 1)'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+      }
+    });
   const dataBar = {
       labels: ticketTypes,
     datasets: [{
@@ -30,24 +76,8 @@ function BarChartHorizType({selected}){
       label: 'My First Dataset',
       data: timeCount,
       fill: false,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
-      ],
-      borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
-        ],
+      backgroundColor: customColors,
+      borderColor: customColors,
         borderWidth: 1
       }]
     };
@@ -56,11 +86,19 @@ function BarChartHorizType({selected}){
           }
         
     return(
-        <>
+      
          <div style={{ width: "500px" }}>
-      <Bar data={dataBar} options={options} />
+      <Bar 
+      data={dataBar} 
+      options={{
+        ...options,
+        plugins: {
+          title: {
+            display: true,
+            text: " Charge estimé par type",
+          },
+        },}} />
     </div>
-         </> 
     )
 }
 export default BarChartHorizType;
