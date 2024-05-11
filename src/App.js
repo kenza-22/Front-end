@@ -9,6 +9,12 @@ import AddUser from "./components/AddUser";
 import GestionUser from "./pages/GestionUser";
 import Landing from "./pages/Landing";
 import Login from "./pages/login";
+import AssignUser from "./components/AssignUser";
+import AddGroup from "./components/AddGroup";
+import GestionGroups from "./pages/GestionGroups";
+import Profile from "./pages/Profile";
+import UpdateUser from "./pages/UpdateUser";
+import ListMembers from "./components/Listmembers";
 function App() {
   return (
     <Routes>
@@ -21,7 +27,12 @@ function App() {
         }
       >
         <Route path="/GestionUser" element={<GestionUser />} />
+        <Route path="/GestionGroups" element={<GestionGroups />} />
+        <Route path="/Members/:groupId" element={<ListMembers/>} />
+        <Route path="/UpdateUser" element={<UpdateUser/>} />
         <Route path="/AddUser" element={<AddUser />} />
+        <Route path="/AddGroup" element={<AddGroup/>} />
+        <Route path="/AssignUser/:userId" element={<AssignUser/>} />
         <Route path="/DashboardsIssues" element={<DashboardIssues />} />
         <Route path="/DashboardsProject" element={<DashboardsProject />} />
         <Route
