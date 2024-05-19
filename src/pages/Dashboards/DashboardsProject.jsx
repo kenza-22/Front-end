@@ -1,14 +1,11 @@
 import React from "react";
-import { Home } from "../Home";
-import SuivieProj from "../../components/Cards/SuivieProj";
 import VelociteProj from "../../components/Charts/BarCharts/VelociteProj";
 import AvancementTemps from "../../components/Charts/PieCharts/AvancementTemps";
-import { Card } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Cards from "../../components/Cards/cards";
 import PourcEffortTrait from "../../components/Charts/PieCharts/PourcEfforTrait";
-import PourcTraitBugs from "../../components/Charts/PieCharts/PourcTraitBugs";
+import PourcTraitementBugs from "../../components/Charts/DoughnutCharts/PourcTraitementBugs";
 function DashboardsProject(){
     const [selected, setSelected] = useState(null);
     const [Project, setProject] = useState([]);
@@ -38,26 +35,32 @@ function DashboardsProject(){
         </select>
       </div>
             <br/>
-            <Cards selected={selected}/>
-             {/* <SuivieProj/> */}
-      
-   <br/>
-   <div className="flex">
-   
-    <VelociteProj selected={selected}/>
-    
+            {selected ? (
+      <>
+                <Cards selected={selected}/>
 
-    <div className="ml-auto">
+<div className="graphBox">
+    <div className="box">
     <AvancementTemps selected={selected}/>
     </div>
+    <div className="box">
+    <VelociteProj selected={selected}/>
     </div>
-    <br/><br/>
-    <div className="flex">
+  </div>
+  <div className="graphBox">
+    <div className="box">
     <PourcEffortTrait selected={selected}/>
-    <div className="ml-auto">
-    <PourcTraitBugs selected={selected}/>
     </div>
+    <div className="box">
+    <PourcTraitementBugs selected={selected}/>
     </div>
+  </div>  
+      </>
+    ) : (
+      <div className="text-center text-red-500">
+        Veuillez sélectionner un projet
+      </div>
+    )}
         </div>
     );
 }

@@ -2,9 +2,9 @@ import { useMsal } from "@azure/msal-react";
 import { useEffect, useState } from "react";
 //import { Route, Navigate  } from "react-router-dom";
 
-const UserInfo = ({Group, setGroup}) => {
+const UserInfo = ({Group, setGroup , user, setUser}) => {
   const { instance, accounts } = useMsal();
-  const [user, setUser] = useState(null);
+
   const [accessToken, setAccessToken] = useState(null);
   const [roles, setRoles] = useState([]);
 
@@ -57,7 +57,7 @@ const UserInfo = ({Group, setGroup}) => {
     <div>
       {user && (
         <div>
-          <h1>Hello, {user.name}</h1> 
+          <h1>{user.name}</h1> 
         </div>
       )}
     </div>

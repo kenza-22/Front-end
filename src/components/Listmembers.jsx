@@ -1,14 +1,40 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 function ListMembers(){
+  const [data, setData] = useState({ value: [] });
+  const { groupId } = useParams();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if(groupId){
+      axios
+      .get(`http://localhost:5000/group/members/${groupId}`)
+      .then((res) => {
+        console.log("Membres:", res.data.members.value);
+        setData(res.data.members.value);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error fetching data:", err);
+        setLoading(false);
+      });
+    }
+   
+  }, [groupId]);
    return(
-    <div>
-        <div>
-        <div className="px-4 sm:px-6 lg:px-8 max-w-screen-lg mx-auto">
+    <>
+     {loading ? ( 
+       <div className="flex items-center justify-center min-h-screen">
+       <div className="loader"></div>;
+       </div>
+      ) :(
+        <div className="flex items-center justify-center min-h-screen pt-35">
           <div className="sm:flex sm:items-center">
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                   <h1 className="text-base font-semibold leading-6 text-gray-900">
-                    Members
+                    Membres
                   </h1>
                 </div>
                
@@ -30,18 +56,30 @@ function ListMembers(){
                               scope="col"
                               className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                             >
-                              Group Name
+                              Nom d'affichage
                             </th>
                             <th
                               scope="col"
                               className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                             >
-                              Action
+                             Nom principal
                             </th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                          
+                        {data.map((user, i) => (
+                            <tr key={i}>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {i+1}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {user.displayName}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                {user.userPrincipalName}
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
@@ -50,9 +88,9 @@ function ListMembers(){
               </div>
             </div>
           </div>
-        </div>
-      </div> 
-    </div>
+        </div>)}
+
+    </>
    );
 }
 export default ListMembers;

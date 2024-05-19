@@ -6,7 +6,7 @@ export const SignOutButton = () => {
         instance.logoutRedirect();
     }
     return (
-        <li>
+        <button>
         <a
           className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
           onClick={handleSignOut}
@@ -28,7 +28,7 @@ export const SignOutButton = () => {
           </svg>
           Déconnexion
         </a>
-      </li>
+      </button>
       
     )
 };

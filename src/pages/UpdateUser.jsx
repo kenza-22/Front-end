@@ -1,58 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateUser() {
-    const navigate = useNavigate();
-    const pages = [
-        { name: "Users", onClick: () => navigate("/GestionUser"), current: false },
-        { name: "Update user", onClick: () => navigate("/UpdateUser"), current: true },
-    ];
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  
+  const pages = [
+    { name: "Utilisateurs", onClick: () => navigate("/GestionUser"), current: false },
+    { name: "Modifier utilisateur", onClick: () => navigate("/UpdateUser"), current: true },
+  ];
+  
   const [data, setData] = useState({
     displayName: "",
     mailNickname: "",
     userPrincipalName: ""
   });
-  const [id, setId] = useState('');
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .patch(`http://localhost:5000/user/${id}`)
+    
+    const updatedData = {};
+    
+  
+    if (data.displayName) {
+      updatedData.displayName = data.displayName;
+    }
+    if (data.mailNickname) {
+      updatedData.mailNickname = data.mailNickname;
+    }
+    if (data.userPrincipalName) {
+      updatedData.userPrincipalName = data.userPrincipalName;
+    }
+    
+   
+    if (Object.keys(updatedData).length === 0) {
+      toast.error("Veuillez remplir les champs !");
+      return;
+    }
+    axios.patch(`http://localhost:5000/user/${userId}`, updatedData)
       .then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-          toast.info("Profile updated successfully!");
-        } else {
-          toast.error("Failed to update profile!");
-        }
+        console.log(res);
+        toast.success("Utilisateur modifié avec succès");
       })
       .catch((err) => {
         console.error(err);
-        toast.error("Failed to update profile!");
+        toast.error("Erreur lors de la modification");
       });
   };
+  
   
   return (
     <div>
       <ToastContainer/>
       <nav className="sm:ml-auto flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
-          <li>
-            <div>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
-                <HomeIcon
-                  className="h-5 w-5 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Home</span>
-              </a>
-            </div>
-          </li>
           {pages.map((page) => (
             <li key={page.name}>
               <div className="flex items-center">
@@ -83,7 +88,7 @@ function UpdateUser() {
                   htmlFor="DisplayName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Display name
+                  Nom d'affichage
                 </label>
                 <div className="mt-2">
                   <input
@@ -104,7 +109,7 @@ function UpdateUser() {
                   htmlFor="Mail-Nick-Name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Mail Nick Name
+                  Pseudonyme de messagerie
                 </label>
                 <div className="mt-2">
                   <input
@@ -125,7 +130,7 @@ function UpdateUser() {
                   htmlFor="PrincipalName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Principal name
+                  Nom principal
                 </label>
                 <div className="mt-2">
                   <input
@@ -140,8 +145,6 @@ function UpdateUser() {
                   />
                 </div>
               </div>
-
-    
             </div>
           </div>
         </div>
@@ -151,7 +154,7 @@ function UpdateUser() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add
+            Enregistrer
           </button>
         </div>
       </form>
@@ -159,4 +162,5 @@ function UpdateUser() {
     </div>
   );
 }
+
 export default UpdateUser;

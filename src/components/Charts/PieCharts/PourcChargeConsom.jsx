@@ -5,15 +5,19 @@ import axios from "axios";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 function PourcChargeConsom({selected}){
-  const [PourcCharge, setPourcCharge] = useState(0);
+  const [PourcCharge, setPourcCharge] = useState(null);
 
   useEffect(() => {
     if (selected) {
       axios
-        .get(`http://localhost:5000/project/${selected}/timeRatio`)
+        .get(`http://localhost:5000/project/${selected}/timeRatioFinish`)
         .then((res) => {
           console.log("Poucentage charge:", res.data);
-          setPourcCharge(res.data.percentage);
+          if (Object.keys(res.data).length === 0) {
+            setPourcCharge(null); 
+          } else {
+            setPourcCharge(res.data.percentage);
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -26,20 +30,8 @@ function PourcChargeConsom({selected}){
             label: "Count",
             data: [PourcCharge, remainingPercentage],
             backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)",
+              "rgba(216, 191, 216, 1)",
+              "rgba(173, 216, 230, 1)"
             ],
             borderWidth: 1,
           },
@@ -47,7 +39,7 @@ function PourcChargeConsom({selected}){
       };
 return(
     <div style={{ width: "300px" }}>
-        <Pie 
+        {PourcCharge !== null ?(     <Pie 
         data={dataPie} 
         options={{
           plugins: {
@@ -57,7 +49,8 @@ return(
             },
           },
         }}
-        />
+        />): (<div className="text-center text-red-500">pas de données!</div>)}
+     
         </div> 
 )
 }

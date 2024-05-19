@@ -9,13 +9,13 @@ import { PublicClientApplication, EventType } from '@azure/msal-browser';
  
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react';
 import Landing from './pages/Landing';
-import { HomeLayout } from './pages/Home';
+
  
 const pca = new PublicClientApplication({
     auth: {
         clientId: '716fa805-d117-44b8-8d9a-f6443efba185',
         authority: 'https://login.microsoftonline.com/fe013626-9e98-4cbe-b49e-c5848b622c2d/oauth2/v2.0/authorize',
-        redirectUri: 'http://localhost:3000'
+        redirectUri: 'http://localhost:3000/welcome'
     }
 });
  

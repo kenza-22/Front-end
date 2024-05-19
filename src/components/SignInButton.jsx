@@ -2,7 +2,6 @@ import {useMsal} from '@azure/msal-react';
 import { useNavigate } from 'react-router-dom';
 export const SignInButton = () => {
     const {instance} = useMsal();
-    const navigate = useNavigate();
     const handleSignIn = () => {
         instance.loginRedirect({
             scopes: ['user.read']

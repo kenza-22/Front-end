@@ -1,11 +1,9 @@
 import React from "react";
 import ChargeTraitBugs from "../../components/Cards/ChargeTraitBugs";
-import Burndown from "../../components/Charts/LineCharts/Burndown";
 import PourcChargeConsom from'../../components/Charts/PieCharts/PourcChargeConsom'
 import RatioBugs from "../../components/Charts/Jauge/RatioBugs";
 import QualiteFonctionnelle from "../../components/Charts/Jauge/QualiteFonctionnelle";
-import BugGenerDev from "../../components/Cards/BugGenerDev";
-import { Card } from "@material-tailwind/react";
+import PourcTraitementBugs from "../../components/Charts/DoughnutCharts/PourcTraitementBugs";
 import { useState, useEffect } from "react";
 import axios from "axios";
 function DashboardsSprintFinish(){
@@ -36,28 +34,34 @@ function DashboardsSprintFinish(){
         </select>
       </div>
             <br/>
-          
-            <ChargeTraitBugs selected={selected}/>
-          
-            <div className="flex">
-            
-            <Burndown selected={selected}/>
-          
-            <div className="ml-auto">
-            <PourcChargeConsom selected={selected}/>
+            {selected ? (
+      <>
+         <ChargeTraitBugs selected={selected}/>
+               
+               <div className="graphBox">
+            <div className="box">
+            <PourcChargeConsom className="justify-center" selected={selected}/>
+            </div>
+            <div className="box">
+              <div className="flex">
+            <PourcTraitementBugs selected={selected}/>
             </div>
             </div>
-             <div className="flex">
-       
+          </div>
+          <div className="graphBox">
+            <div className="box">
             <QualiteFonctionnelle selected={selected}/>
-      
-
-            <div className="ml-auto">
+            </div>
+            <div className="box">
             <RatioBugs selected={selected}/>
             </div>
-            </div>
-           
-            
+          </div>    
+      </>
+    ) : (
+      <div className="text-center text-red-500">
+        Veuillez sélectionner un projet
+      </div>
+    )}
             
 
 

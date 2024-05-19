@@ -12,7 +12,11 @@ const [EffortTrait, setEffortTrait] = useState(null);
       axios.get(`http://localhost:5000/project/${selected}/effortRatio`)
       .then((res)=>{
         console.log("points effort traité from API:", res.data);
-        setEffortTrait(res.data.percentage);
+        if (Object.keys(res.data).length === 0) {
+          setEffortTrait(null); 
+        } else {
+          setEffortTrait(res.data.percentage);
+        }
       })
       .catch((err) => console.log(err));
     }
@@ -27,8 +31,8 @@ const [EffortTrait, setEffortTrait] = useState(null);
             label: "Pourcentage",
             data: [EffortTrait, remainingPercentage],
             backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)'
+              "rgba(154, 205, 50, 1)",
+              "rgba(176, 196, 222, 1)"
              
             ],
             
@@ -38,7 +42,7 @@ const [EffortTrait, setEffortTrait] = useState(null);
       };
 return(
     <div style={{ width: "300px" }}>
-        <Pie 
+      {EffortTrait !== null ? (<Pie 
         data={dataPie} 
         options={{
           plugins:{
@@ -48,7 +52,8 @@ return(
             }
           }
         }}
-        />
+        />): ( <div className="text-center text-red-500">pas de données!</div>)}
+        
         </div> 
 )
 }

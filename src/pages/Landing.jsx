@@ -1,5 +1,6 @@
 import Logo from "./Images/logo_mobelite.png";
 import test from "./Images/Capture d'écran 2024-03-21 144508.png";
+import Ticket from "./Images/Tickets.png";
 import projectOverview from "./Images/project overview.png";
 import sprintAnalytics from "./Images/sprint-analytics.png";
 import projectTracking from "./Images/project-tracking.png";
@@ -10,8 +11,15 @@ import { SignInButton } from "../components/SignInButton";
 import { SignOutButton } from "../components/SignOutButton";
 import "../App.css";
 import { Fade } from "react-reveal";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Landing() {
   const IsAuthenticated = useIsAuthenticated();
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if (!IsAuthenticated) navigation("/");
+  }, [IsAuthenticated]);
   return (
     <div className="bg-white animate-fade-in">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -60,17 +68,18 @@ export default function Landing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center">
                 <h1 className="text font-bold tracking-tight sm:text-5xl">
-                La Meilleure Façon Pour Gérer Votre Projet
+                  La Meilleure Façon Pour Gérer Votre Projet
                 </h1>
                 <p className="sous-titre animated-text mt-6 text-lg leading-8 text-gray-600">
-                Une approche plus efficace de la gestion de projet, optimisant la productivité et favorisant la prise de décision 
+                  Une approche plus efficace de la gestion de projet, optimisant
+                  la productivité et favorisant la prise de décision
                 </p>
               </div>
 
               <div className="mt-16 flow-root sm:mt-24">
                 <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
                   <img
-                    src={test}
+                    src={Ticket}
                     alt="App screenshot"
                     width={2000}
                     height={1442}
@@ -87,17 +96,18 @@ export default function Landing() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-2xl lg:text-center">
                 <h2 className="text-base font-semibold leading-7 text-blue-500">
-                Visualiser Rapidement
+                  Visualiser Rapidement
                 </h2>
                 <p className="text1 mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                Libérez le potentiel de la visualisation des données Jira
+                  Libérez le potentiel de la visualisation des données Jira
                 </p>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                Explorez et comprener facilement la dynamique de votre projet grâce à 
-                nos solutions de tableau de bord intuitives. De la progression du projet à l'analyse 
-                des sprints. Donnez à votre équipe les clés pour des perspectives 
-                exploitables et améliorer votre expérience de gestion de projet 
-                avec nos tableaux de bord de visualisation des données Jira
+                  Explorez et comprener facilement la dynamique de votre projet
+                  grâce à nos solutions de tableau de bord intuitives. De la
+                  progression du projet à l'analyse des sprints. Donnez à votre
+                  équipe les clés pour des perspectives exploitables et
+                  améliorer votre expérience de gestion de projet avec nos
+                  tableaux de bord de visualisation des données Jira
                 </p>
               </div>
               <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -110,8 +120,9 @@ export default function Landing() {
                       Vue d'ensemble du projet
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                    Gagnez en clarté dans vos projets avec des visualisations perspicaces. Suivez les tickets, 
-                    surveillez les progrès et identifiez points à améliorer.
+                      Gagnez en clarté dans vos projets avec des visualisations
+                      perspicaces. Suivez les tickets, surveillez les progrès et
+                      identifiez points à améliorer.
                     </dd>
                   </div>
                   <div className="relative pl-16">
@@ -119,12 +130,12 @@ export default function Landing() {
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
                         <img src={sprintAnalytics} alt="Sprint analytics" />
                       </div>
-                      Analyse Sprint
+                      Analyse des sprints
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                    Surveillez de près la performance de votre sprint. 
-                    Visualisez la progression du sprint, 
-                    la vélocité et la capacité de l'équipe pour optimiser la productivité.
+                      Surveillez de près la performance de votre sprint.
+                      Visualisez la progression du sprint, la vélocité et la
+                      capacité de l'équipe pour optimiser la productivité.
                     </dd>
                   </div>
                   <div className="relative pl-16">
@@ -132,24 +143,30 @@ export default function Landing() {
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
                         <img src={projectTracking} alt="Project tracking" />
                       </div>
-                      Suivi De Projet
+                      Suivi de projet
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                    Suivez sans effort les jalons et les progrès du projet. 
-                    Tenez les parties prenantes informées et gardez les projets
-                     sur la bonne voie avec des tableaux de bord complets de suivi de projet
+                      Suivez sans effort les jalons et les progrès du projet.
+                      Tenez les parties prenantes informées et gardez les
+                      projets sur la bonne voie avec des tableaux de bord
+                      complets de suivi de projet
                     </dd>
                   </div>
                   <div className="relative pl-16">
                     <dt className="text-base font-semibold leading-7 text-gray-900">
                       <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500">
-                        <img src={Visualisation} alt="Custom report" className="w-6"/>
+                        <img
+                          src={Visualisation}
+                          alt="Custom report"
+                          className="w-6"
+                        />
                       </div>
-                      Variété De Graphiques
+                      Variété de Graphiques
                     </dt>
                     <dd className="mt-2 text-base leading-7 text-gray-600">
-                    Découvrez une multitude de visualisation graphique pour analyser les données de Jira de manière approfondie et adaptée à vos besoins spécifiques. 
-                    
+                      Découvrez une multitude de visualisation graphique pour
+                      analyser les données de Jira de manière approfondie et
+                      adaptée à vos besoins spécifiques.
                     </dd>
                   </div>
                 </dl>
