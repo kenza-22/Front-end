@@ -50,8 +50,8 @@ function ChargeTraitBugs({selected}) {
   }, [selected]);
   return (
     <div className="flex flex-wrap justify-center">
-      <TopCard title={"Charge Traitement Des Bugs"} tagColor={"bg-cyan-500 text-white"} prefix={"Nombre"} tagContent={ChargeTrait} />
-      <TopCard title={"Bug Généré Par Effort de Dev"} tagColor={"bg-cyan-500 text-white"} prefix={"Nombre"} tagContent={BugGenr} />
+      <TopCard title={"Charge Traitement Des Bugs"} tagColor={"bg-red-500 text-white"} prefix={"Nombre"} tagContent={ChargeTrait} />
+      <TopCard title={"Bug Généré Par Effort de Dev"} tagColor={"bg-red-500 text-white"} prefix={"Nombre"} tagContent={BugGenr} />
     </div>
   )
 }

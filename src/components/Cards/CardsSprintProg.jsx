@@ -49,7 +49,7 @@ function CardsSprintProg({selected}) {
   }, [selected]);
   return (
     <div className="flex justify-center">
-    <TopCard title={"Nombre de Bugs"} tagColor={"bg-cyan-500 text-white"} prefix={"Nombre"} tagContent={Bugs} />
+    <TopCard title={"Nombre de Bugs"} tagColor={"bg-red-500 text-white"} prefix={"Nombre"} tagContent={Bugs} />
     <TopCard title={"Points Effort VS Charge"} tagColor={"bg-purple-500 text-white"} prefix={"Nombre"} tagContent={Charge} />
   </div>
   

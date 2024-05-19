@@ -48,9 +48,6 @@ const Cards = ({selected}) => {
         }
       }, [selected]);
 
-     
-
-  
   return (
     <div className="flex flex-wrap justify-center">
       <TopCard title={"Tickets Estimés"} tagColor={"bg-cyan-500 text-white"} prefix={"Nombre"} tagContent={ticketEstime} />

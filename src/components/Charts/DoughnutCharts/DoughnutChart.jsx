@@ -78,8 +78,13 @@ function DoughnutChart({ selected }) {
   };
 
   return (
-    <div style={{ width: "300px" }}>
-      <Doughnut 
+    <div>
+        {ticketTypes.length === 0 ? (
+        <div className="text-center text-red-500">
+          Pas de données!
+        </div>
+      ) : (
+        <Doughnut 
       data={dataDoughnut} 
       options={{
         plugins: {
@@ -90,6 +95,8 @@ function DoughnutChart({ selected }) {
         },
       }}
       />
+      )}
+      
     </div>
   );
 }

@@ -2,58 +2,51 @@ import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 const pages = [
-  { name: "Users", href: "/GestionUser", current: false },
-  { name: "Add User", href: "/AddUser", current: true },
+  { name: "Utilisateurs", href: "/GestionUser", current: false },
+  { name: "Ajouter utilisateur", href: "/AddUser", current: true },
 ];
 
 function AddUser() {
   const initialData = {
-    accountEnabled: false,
+    accountEnabled: true, // Set default to true
     displayName: "",
     mailNickname: "",
     userPrincipalName: "",
     passwordProfile: {
-      forceChangePasswordNextSignIn: false,
+      forceChangePasswordNextSignIn: true, // Set default to true
       password: "",
     },
   };
 
-  const [data, setData] = useState(initialData);;
+  const [data, setData] = useState(initialData);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!data.displayName || !data.mailNickname || !data.userPrincipalName || !data.passwordProfile.password) {
+      toast.error("Veuillez remplir les champs !");
+      return; 
+    }
     axios.post("http://localhost:5000/user", data)
       .then((res) => {
         console.log(res);
-        toast.success("User added successfully!");
+        toast.success("Utilisateur ajouté avec succès !");
         setData(initialData);
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Failed to add user!");
-       
+        toast.error("Erreur d'ajout de l'utilisateur");
       });
   };
 
   return (
     <div>
-      <ToastContainer/>
+      <ToastContainer />
       <nav className="sm:ml-auto flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
-          <li>
-            <div>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
-                <HomeIcon
-                  className="h-5 w-5 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Home</span>
-              </a>
-            </div>
-          </li>
           {pages.map((page) => (
             <li key={page.name}>
               <div className="flex items-center">
@@ -77,14 +70,13 @@ function AddUser() {
         <div className="space-y-12">
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
             <div></div>
-
             <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="DisplayName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Display name
+                  Nom d'affichage
                 </label>
                 <div className="mt-2">
                   <input
@@ -105,7 +97,7 @@ function AddUser() {
                   htmlFor="Mail-Nick-Name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Mail Nick Name
+                  Pseudonyme de messagerie
                 </label>
                 <div className="mt-2">
                   <input
@@ -126,7 +118,7 @@ function AddUser() {
                   htmlFor="PrincipalName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Principal name
+                  Nom principal 
                 </label>
                 <div className="mt-2">
                   <input
@@ -147,17 +139,15 @@ function AddUser() {
                   htmlFor="accountEnabled"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Account Enabled
+                  Compte activé
                 </label>
                 <div className="mt-2">
-                <input
+                  <input
                     type="checkbox"
                     name="accountEnabled"
                     id="accountEnabled"
                     checked={data.accountEnabled}
-                    onChange={(e) =>
-                      setData({ ...data, accountEnabled: e.target.checked })
-                    }
+                    disabled={true} // Disable the checkbox
                   />
                 </div>
               </div>
@@ -167,7 +157,7 @@ function AddUser() {
                   htmlFor="Password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                 Mot de passe
                 </label>
                 <div className="mt-2">
                   <input
@@ -194,23 +184,15 @@ function AddUser() {
                   htmlFor="forceChangePasswordNextSignIn"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                 Force Change Password Next Sign In
+                 Forcer le changement de mot de passe lors de la prochaine connexion
                 </label>
                 <div className="mt-2">
-                <input
+                  <input
                     type="checkbox"
                     name="forceChangePasswordNextSignIn"
                     id="forceChangePasswordNextSignIn"
                     checked={data.passwordProfile.forceChangePasswordNextSignIn}
-                    onChange={(e) =>
-                      setData({
-                        ...data,
-                        passwordProfile: {
-                          ...data.passwordProfile,
-                          forceChangePasswordNextSignIn: e.target.checked,
-                        },
-                      })
-                    }
+                    disabled={true} // Disable the checkbox
                   />
                 </div>
               </div>
@@ -224,7 +206,7 @@ function AddUser() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add
+            Ajouter
           </button>
         </div>
       </form>
@@ -232,4 +214,5 @@ function AddUser() {
     </div>
   );
 }
+
 export default AddUser;

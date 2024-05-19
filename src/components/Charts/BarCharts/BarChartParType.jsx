@@ -72,7 +72,7 @@ function BarChartParType({ selected }) {
     labels: ticketTypes,
     datasets: [
       {
-        label: ticketTypes,
+        label: "Nombre des tickets",
         data: ticketCounts,
         backgroundColor: customColors,
         borderColor: customColors,
@@ -89,19 +89,26 @@ function BarChartParType({ selected }) {
     }
   return (
 
-    <div style={{ width: "500px" }}>
-      <Bar 
-      data={dataBar}
-      options={{
-        ...options,
-        plugins: {
-          title: {
-            display: true,
-            text: "Nombre des tickets par type",
+    <div>
+         {ticketTypes.length === 0 ? (
+        <div className="text-center text-red-500">
+          Pas de données!
+        </div>
+      ) : (
+        <Bar 
+        data={dataBar}
+        options={{
+          ...options,
+          plugins: {
+            title: {
+              display: true,
+              text: "Nombre des tickets par type",
+            },
           },
-        },
-      }}
-      />
+        }}
+        />
+      )}
+    
     </div>
 
   );

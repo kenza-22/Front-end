@@ -34,15 +34,16 @@ function VelociteProj({ selected }) {
 
   const dataBar = {
     labels: labels,
-     datasets: labels.map((label, index) => ({
-      label: label,
-      data: [velocities[index]],
-     backgroundColor: customColors[index],
-       borderColor: customColors[index],
+     datasets: [
+      {
+      label: "Vélocité agile",
+      data: velocities,
+     backgroundColor: customColors,
+       borderColor: customColors,
       borderWidth: 1,
-     })),
+    }
+  ]
   };
-
   const options = {
     scales: {
       y: {
@@ -53,28 +54,27 @@ function VelociteProj({ selected }) {
 
   return (
     <div style={{ width: "600px" }}>
-      <Bar
-        data={dataBar}
-        options={{
-          ...options,
-          plugins: {
-            legend: {
-              display: false, 
+      {VelocityProject.length > 0 ? (
+        <Bar
+          data={dataBar}
+          options={{
+            ...options,
+            plugins: {
+              legend: {
+                display: false, 
+              },
+              title: {
+                display: true,
+                text: "Velocité Agile",
+              },
             },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-          plugins: {
-            title: {
-              display: true,
-              text: "Velocité Agile",
-            },
-          },
-        }}
-      />
+          }}
+        />
+      ) : (
+        <div className="text-center text-red-500">
+          pas de données!
+        </div>
+      )}
     </div>
   );
   

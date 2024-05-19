@@ -1,19 +1,35 @@
 import React from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 const pages = [
-  { name: "Users", href: "/GestionUser", current: false },
-  { name: "Assign User", href: "/AssignUser", current: true },
+  { name: "Utilisateurs", href: "/GestionUser", current: false },
+  { name: "Attribuer utilisateur", href: "/AssignUser", current: true },
 ];
 
 function AssignUser() {
   const [Group, setGroup] = useState([]);
-
+  const [user, setUser]= useState([]);
+  const [UserID, setUserID]= useState([]);
+  const { userId } = useParams();
+  useEffect(() => {
+    if(userId){
+      axios
+      .get(`http://localhost:5000/user/${userId}`)
+      .then((res) => {
+        console.log("User:", res.data);
+        setUser(res.data.displayName);
+        setUserID(res.data.id)
+      })
+      .catch((err) => {
+        console.log("Error fetching data:", err);
+      });
+    }
+   
+  }, [userId]);
   useEffect(() => {
     axios
       .get("http://localhost:5000/role")
@@ -29,44 +45,43 @@ function AssignUser() {
         console.log("Error fetching data:", err);
       });
   }, []);
-  const { userId} = useParams();
+  
   const [data, setData] = useState({
     userId: "", 
     groupId: "" 
   });
   
-  const navigate = useNavigate();
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!data.groupId) {
+      toast.error("Veuillez sélectionner un groupe !");
+      return;
+    }
     const formData = {
-      userId: userId, 
-      groupId: data.groupId // L'identifiant du groupe sélectionné dans le formulaire
+      userId: UserID, 
+      groupId: data.groupId 
     };
-  
+    
     axios
       .post("http://localhost:5000/user/assign-role", formData)
       .then((res) => {
         console.log("Assign user", res);
-        navigate("/GestionUser");
+        toast.success("Utilisateur ajouté au groupe avec succès !");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Erreur d'ajout de l'utilisateur au groupe");
+    }
+    );
   };
   
   return (
     <div>
+      <ToastContainer/>
       <nav className="sm:ml-auto flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
-          <li>
-            <div>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
-                <HomeIcon
-                  className="h-5 w-5 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Home</span>
-              </a>
-            </div>
-          </li>
+          
           {pages.map((page) => (
             <li key={page.name}>
               <div className="flex items-center">
@@ -97,14 +112,14 @@ function AssignUser() {
                   htmlFor="UserID"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  User ID
+                  Utilisateur
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
                     name="UserID"
                     id="UserID"
-                    value={userId}
+                    value={user}
                     readOnly
                     autoComplete="given-name"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -118,7 +133,7 @@ function AssignUser() {
                   htmlFor="groupSelect"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Group
+                  Groupe
                 </label>
                 <div className="mt-2">
                   <select
@@ -131,7 +146,7 @@ function AssignUser() {
                       })
                     }
                   >
-                    <option value="">Select</option>
+                    <option value="">Sélectionner</option>
                     {Group.map((group, index) => (
                       <option key={group.id} value={group.id}>
                         {group.displayName}
@@ -149,7 +164,7 @@ function AssignUser() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Assign group
+            Ajouter
           </button>
         </div>
       </form>

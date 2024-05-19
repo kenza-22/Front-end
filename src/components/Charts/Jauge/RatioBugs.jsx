@@ -5,14 +5,18 @@ import { useState, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 function RatioBugs({selected}){
-  const [Ratio, setRatio] = useState(0);
+  const [Ratio, setRatio] = useState(null);
 
   useEffect(() => {
     if (selected) {
       axios
         .get(`http://localhost:5000/project/${selected}/bugToStoryRatio`)
         .then((res) => {
-          setRatio(res.data.bugToStoryRatio);
+          if (Object.keys(res.data).length === 0) {
+            setRatio(null); 
+          } else {
+            setRatio(res.data.bugToStoryRatio);
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -25,8 +29,8 @@ function RatioBugs({selected}){
         label: "Count",
         data: [Ratio, remainingPercentage],
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)'
+          'rgba(255, 20, 147, 1)',
+          'rgba(176, 196, 222, 1)'
         ],
         circumference: 180,
         rotation: 270
@@ -34,19 +38,19 @@ function RatioBugs({selected}){
     ],
   };
 return(
-    <div style={{ width: "300px" }}>
-        <Doughnut 
-        data={data}
-        options={{
-          plugins: {
-            title: {
-              display: true,
-              text: "Ratio des bugs % Nbr US",
-            },
-          },
-        }}
-        />
-        </div> 
+  <div style={{ width: "300px" }}>
+  {Ratio !== null ?(  <Doughnut 
+    data={data}
+    options={{
+      plugins: {
+        title: {
+          display: true,
+          text: "Ratio des bugs % Nbr US",
+        },
+      },
+    }}
+    />): (<div className="text-center text-red-500">pas de données!</div>)}
+    </div>
  
 )
 }

@@ -5,14 +5,18 @@ import { useState, useEffect } from "react";
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 function QualiteFonctionnelle({selected}){
-  const [Qualite, setQualite] = useState(0);
-
+  const [Qualite, setQualite] = useState(null);
   useEffect(() => {
     if (selected) {
       axios
         .get(`http://localhost:5000/project/${selected}/timeConsumedRatio`)
         .then((res) => {
           console.log('Qualité fonctionnelle', res.data)
+          if (Object.keys(res.data).length === 0) {
+            setQualite(null); 
+          } else {
+            setQualite(res.data.bugToStoryRatio);
+          }
           setQualite(res.data.ratio);
         })
         .catch((err) => console.log(err));
@@ -27,7 +31,7 @@ function QualiteFonctionnelle({selected}){
         data: [Qualite, remainingPercentage],
         backgroundColor: [
           'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)'
+          'rgba(176, 196, 222, 1)'
         ],
         circumference: 180,
         rotation: 270
@@ -37,7 +41,7 @@ function QualiteFonctionnelle({selected}){
 return(
 
     <div style={{ width: "300px" }}>
-        <Doughnut 
+       {Qualite !== null ?(     <Doughnut 
         data={data}
         options={{
           plugins: {
@@ -47,7 +51,8 @@ return(
             },
           },
         }}
-        />
+        />): (<div className="text-center text-red-500">pas de données!</div>)}
+        
         </div> 
 )
 }

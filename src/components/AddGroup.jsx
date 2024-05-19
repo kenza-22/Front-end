@@ -1,53 +1,70 @@
 import React from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { ChevronRightIcon, HomeIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 function AddGroup() {
-    const navigate = useNavigate();
-    const pages = [
-      { name: "Groups", onClick: () => navigate("/GestionGroups"), current: false },
-      { name: "Add Group", onClick: () => navigate("/AddGroup"), current: true },
-    ];
-  const [data, setData] = useState({
+  const navigate = useNavigate();
+  const pages = [
+    {
+      name: "Groupes",
+      onClick: () => navigate("/GestionGroups"),
+      current: false,
+    },
+    {
+      name: "Ajouter un Groupe",
+      onClick: () => navigate("/AddGroup"),
+      current: true,
+    },
+  ];
+  const initialData = {
     securityEnabled: false,
     displayName: "",
     mailEnabled: false,
     mailNickname: "",
-  });
-  
+  };
+  const [data, setData] = useState(initialData);
+  const handleRadioChange = (value) => {
+    setData({
+      ...data,
+      securityEnabled: value === "securityEnabled",
+      mailEnabled: value === "mailEnabled",
+      groupTypes: ["Unified"],
+
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!data.displayName || !data.mailNickname) {
+      toast.error("Veuillez remplir les champs !");
+      return;
+    }
+    // setData({
+    //   ...data,
+    //   
+    // });
+   // data.groupTypes = ["Unified"];
     axios
-      .post("http://localhost:5000/user/role", data)
+      .post("http://localhost:5000/group", data)
       .then((res) => {
         console.log(res);
-        // toast.success("User added successfully!");
-        navigate("/GestionGroups");
+        toast.success("Groupe ajouté avec succès");
+        setData(initialData);
       })
-      .catch((err) => console.log(err));
-      // toast.error("Failed to add user!");
+      .catch((err) => {
+        toast.error("Erreur d'ajout du groupe");
+        console.log(err);
+      });
   };
 
   return (
     <div>
+      <ToastContainer />
       <nav className="sm:ml-auto flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
-          <li>
-            <div>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
-                <HomeIcon
-                  className="h-5 w-5 flex-shrink-0"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">Home</span>
-              </a>
-            </div>
-          </li>
           {pages.map((page) => (
             <li key={page.name}>
               <div className="flex items-center">
@@ -78,7 +95,7 @@ function AddGroup() {
                   htmlFor="DisplayName"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Group Name
+                  Nom groupe
                 </label>
                 <div className="mt-2">
                   <input
@@ -99,7 +116,7 @@ function AddGroup() {
                   htmlFor="Mail-Nick-Name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Mail Nick Name
+                  Pseudonyme de messagerie
                 </label>
                 <div className="mt-2">
                   <input
@@ -114,50 +131,43 @@ function AddGroup() {
                   />
                 </div>
               </div>
-
-
               <div className="sm:col-span-3">
                 <label
                   htmlFor="securityEnabled"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Security Enabled
+                  Sécurité
                 </label>
                 <div className="mt-2">
-                <input
-                    type="checkbox"
+                  <input
+                    type="radio"
                     name="securityEnabled"
                     id="securityEnabled"
+                    value="securityEnabled"
                     checked={data.securityEnabled}
-                    onChange={(e) =>
-                      setData({ ...data, securityEnabled: e.target.checked })
-                    }
+                    onChange={(e) => handleRadioChange(e.target.value)}
                   />
                 </div>
               </div>
-              
+
               <div className="sm:col-span-3">
                 <label
                   htmlFor="mailEnabled"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Mail Enabled
+                  Microsoft 365
                 </label>
                 <div className="mt-2">
-                <input
-                    type="checkbox"
+                  <input
+                    type="radio"
                     name="mailEnabled"
                     id="mailEnabled"
+                    value="mailEnabled"
                     checked={data.mailEnabled}
-                    onChange={(e) =>
-                        setData({ ...data, mailEnabled: e.target.checked })
-                      }
+                    onChange={(e) => handleRadioChange(e.target.value)}
                   />
                 </div>
               </div>
-
-            
-             
             </div>
           </div>
         </div>
@@ -167,7 +177,7 @@ function AddGroup() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add
+            Ajouter
           </button>
         </div>
       </form>
