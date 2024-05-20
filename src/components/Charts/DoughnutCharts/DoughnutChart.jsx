@@ -54,6 +54,43 @@ function DoughnutChart({ selected }) {
                       else{
                         if (type === "Bug Sub Task")
                         return 'rgba(255, 67, 67, 1)'
+                        else{
+                          if (type === "Exploratory or research work")
+                          return 'rgba(191, 133, 89, 1)'
+                          else{
+                            if (type === "Planification")
+                            return 'rgba(79, 211, 69, 1)'
+                            else{
+                              if (type === "Création et Désign")
+                              return 'rgba(69, 86, 211, 1)'
+                              else{
+                                if (type === "Feature")
+                                return 'rgba(172, 108, 172, 1)'
+                                else{
+                                  if (type === "Amélioration")
+                                  return 'rgba(80, 200, 160, 1)'
+                                  else{
+                                    if (type === "Design")
+                                    return 'rgba(248, 32, 145, 1)'
+                                    else{
+                                      if (type === "Découpage de Design")
+                                      return 'rgba(244, 116, 116, 1)'
+                                      else{
+                                        if (type === "Test plan")
+                                        return 'rgba(255, 184, 105, 1)'
+                                        else{
+                                          if (type === "Actif")
+                                          return 'rgba(177, 253, 107, 1)'
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          
+                        }
                       }
                     }
                   }

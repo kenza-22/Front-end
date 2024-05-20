@@ -4,22 +4,11 @@ import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { ChevronRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+const pages = [
+  { name: "Groupes", href: "/GestionGroups", current: false },
+  { name: "Ajouter Groupe", href: "/AddGroup", current: true },
+];
 function AddGroup() {
-  const navigate = useNavigate();
-  const pages = [
-    {
-      name: "Groupes",
-      onClick: () => navigate("/GestionGroups"),
-      current: false,
-    },
-    {
-      name: "Ajouter un Groupe",
-      onClick: () => navigate("/AddGroup"),
-      current: true,
-    },
-  ];
   const initialData = {
     securityEnabled: false,
     displayName: "",
@@ -42,11 +31,6 @@ function AddGroup() {
       toast.error("Veuillez remplir les champs !");
       return;
     }
-    // setData({
-    //   ...data,
-    //   
-    // });
-   // data.groupTypes = ["Unified"];
     axios
       .post("http://localhost:5000/group", data)
       .then((res) => {

@@ -12,29 +12,21 @@ import AddGroup from "./components/AddGroup";
 import GestionGroups from "./pages/GestionGroups";
 import UpdateUser from "./pages/UpdateUser";
 import ListMembers from "./components/Listmembers";
-import Welcome from "./components/Welcome";
 function App() {
   return (
     <Routes>
       <Route path="/" element={ <HomeLayout/>}>
-       
         <Route path="/GestionUser" element={<GestionUser />} />
         <Route path="/GestionGroups" element={<GestionGroups />} />
         <Route path="/Members/:groupId" element={<ListMembers/>} />
         <Route path="/UpdateUser/:userId" element={<UpdateUser/>} />
-        <Route path="/AddUser" element={<AddUser />} />
+        <Route path="/AddUser" element={<AddUser/>} />
         <Route path="/AddGroup" element={<AddGroup/>} />
         <Route path="/AssignUser/:userId" element={<AssignUser/>} />
         <Route path="/DashboardsIssues" element={<DashboardIssues />}/>
         <Route path="/DashboardsProject" element={<DashboardsProject />} />
-        <Route
-          path="/DashboardsSprintFinish"
-          element={<DashboardsSprintFinish />}
-        />
-        <Route
-          path="/DashboardsSprintProg"
-          element={<DashboardsSprintProg />}
-        />
+        <Route path="/DashboardsSprintFinish" element={<DashboardsSprintFinish />}/>
+        <Route path="/DashboardsSprintProg" element={<DashboardsSprintProg />} />
       </Route>
     </Routes>
   );
