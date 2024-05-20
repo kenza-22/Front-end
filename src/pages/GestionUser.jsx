@@ -73,7 +73,7 @@ function GestionUser() {
         </div>
     ):(
       <div>
-        <div className="flex items-center justify-center min-h-screen -mt-10">
+        <div className="flex items-center justify-center min-h-screen mt-10">
           <div className="sm:flex sm:items-center">
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="sm:flex sm:items-center">

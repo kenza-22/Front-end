@@ -130,128 +130,147 @@ console.log(user)
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
-                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                        <li>
-                          <button
-                            onClick={() => navigate("/DashboardsProject")}
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
+                    {Group.includes("Admin") && (
+                <div className="text-xs font-semibold leading-6 text-indigo-200">
+                  Gestion utilisateurs et groupes
+                </div>
+              )}
+              {(Group.includes("Manager") ||
+                Group.includes("Scrum Master") ||
+                Group.includes("Product Owner")) &&
+                sidebarItems.some((item) => item) && (
+                  <div className="text-xs font-semibold leading-6 text-indigo-200">
+                    Tableaux de bord
+                  </div>
+                )}
+
+              <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                {sidebarItems.map((item, index) => (
+                  <li key={index}>
+                    <button
+                      onClick={() => handleItemClick(item)}
+                      className={`group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white ${
+                        selectedItem === item ? "selected" : ""
+                      }`}
+                    >
+                      {item === "Groupes" && (
+                        <div>
+                           <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
-                              />
-                            </svg>
-                            Dashboard project monitoring
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => navigate("/DashboardsSprintProg")}
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
-                              />
-                            </svg>
-                            Dashboard sprint in progress
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => navigate("/DashboardsSprintFinish")}
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"
-                              />
-                            </svg>
-                            Dashboard finished sprint
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => navigate("/DashboardsIssues")}
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"
-                              />
-                            </svg>
-                            Dashboard issues
-                          </button>
-                        </li>
-                        <div className="text-xs font-semibold leading-6 text-indigo-200">
-                          Users Management
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+                            />
+                          </svg>
                         </div>
-                        <li>
-                          <button
-                            onClick={() => navigate("/GestionUser")}
-                            href="/GestionUser"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-blue-800 hover:text-white"
+                      )}
+
+                      {item === "Utilisateurs" && (
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                           >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                              />
-                            </svg>
-                            Users
-                          </button>
-                        </li>
-                        <SignOutButton />
-                      </ul>
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                            />
+                          </svg>
+                        </div>
+                      )}
+
+                      {item === "Suivi de projet" && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
+                          />
+                        </svg>
+                      )}
+
+                      {item === "Sprints fini" && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"
+                          />
+                        </svg>
+                      )}
+
+                      {item === "Sprints en cours" && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+                          />
+                        </svg>
+                      )}
+
+                      {item === "Tickets" && (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"
+                          />
+                        </svg>
+                      )}
+
+                      {item}
+                    </button>
+                  </li>
+                ))}
+                <SignOutButton />
+              </ul>
+    
                     </nav>
                   </div>
                 </Dialog.Panel>

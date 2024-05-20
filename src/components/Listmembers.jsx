@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ChevronRightIcon } from "@heroicons/react/solid";
 function ListMembers(){
   const [data, setData] = useState({ value: [] });
   const { groupId } = useParams();
   const [loading, setLoading] = useState(true);
+  const pages = [
+    { name: "Groupes", href: "/GestionGroups", current: false },
+    { name: "Membres", href: "/Members/:groupId", current: true },
+  ];
   useEffect(() => {
     if(groupId){
       axios
@@ -28,10 +33,32 @@ function ListMembers(){
        <div className="loader"></div>;
        </div>
       ) :(
-        <div className="flex items-center justify-center min-h-screen pt-35">
+        <>
+ <nav className="sm:ml-auto flex" aria-label="Breadcrumb">
+        <ol role="list" className="flex items-center space-x-4">
+          {pages.map((page) => (
+            <li key={page.name}>
+              <div className="flex items-center">
+                <ChevronRightIcon
+                  className="h-5 w-5 flex-shrink-0 text-gray-400"
+                  aria-hidden="true"
+                />
+                <a
+                  href={page.href}
+                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                  aria-current={page.current ? "page" : undefined}
+                >
+                  {page.name}
+                </a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </nav>
+        <div className="flex items-center justify-center min-h-screen">
           <div className="sm:flex sm:items-center">
             <div className="px-4 sm:px-6 lg:px-8">
-              <div className="sm:flex sm:items-center">
+              <div className="sm:flex sm:items-center -mt-36">
                 <div className="sm:flex-auto">
                   <h1 className="text-base font-semibold leading-6 text-gray-900">
                     Membres
@@ -88,7 +115,8 @@ function ListMembers(){
               </div>
             </div>
           </div>
-        </div>)}
+        </div>
+        </>)}
 
     </>
    );

@@ -15,7 +15,7 @@ function AvancementTemps({selected}){
           if (Object.keys(res.data).length === 0) {
             setAvancementTemps(null); 
           } else {
-            setAvancementTemps(res.data.percentage);
+            setAvancementTemps(res.data.ratio);
           }
         })
         .catch((err) => console.log(err));
